@@ -13,9 +13,6 @@ import com.astarel.school.model.entity.Student;
 import com.astarel.school.repository.StudentRepository;
 import com.astarel.school.service.StudentService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 public class StudentServiceImpl implements StudentService{
 	

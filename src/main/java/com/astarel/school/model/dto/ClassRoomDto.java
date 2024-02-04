@@ -3,8 +3,6 @@ package com.astarel.school.model.dto;
 import java.util.Date;
 import java.util.List;
 
-import com.astarel.school.model.entity.Student;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

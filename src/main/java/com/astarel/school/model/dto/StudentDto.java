@@ -2,8 +2,6 @@ package com.astarel.school.model.dto;
 
 import java.util.Date;
 
-import org.junit.jupiter.api.ClassOrderer.ClassName;
-
 import com.astarel.school.model.entity.StudentType;
 
 import jakarta.validation.constraints.NotBlank;
