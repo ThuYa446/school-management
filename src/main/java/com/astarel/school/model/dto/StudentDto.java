@@ -37,6 +37,8 @@ public class StudentDto {
 	
 	private ClassRoomDto classRoomDto;
 	
+	private SubjectDto subjectDto;
+	
 	Date createdAt;
 
 	Date updatedAt;

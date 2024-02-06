@@ -38,4 +38,12 @@ public class Student extends Human implements Serializable{
 	@JoinColumn(name="class_room_id")
 	private ClassRoom classRoom;
 	
+	@JsonIgnore
+	@ToString.Exclude
+	@ManyToOne(
+			cascade= CascadeType.ALL
+			)
+	@JoinColumn(name="subject_id")
+	private Subject subject;
+	
 }
