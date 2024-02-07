@@ -84,9 +84,13 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 			classRoom.setStudent(students);
 		}
 		if (!this.isExistClassRoom(classRoom.getClassName())) {
+			if(classRoom.getStudent().size() > 500) {
+				//if(this.classRoomRepository.getTotalNumberOfStudentByClassId(null))
+				throw new ApiErrorResponse("1005", "Maximum allowed student for each class is 500.");
+			}
 			classRoom = this.classRoomRepository.save(classRoom);
 		} else {
-			throw new ApiErrorResponse("1001", "ClassRoom already exist");
+			throw new ApiErrorResponse("1001", "ClassRoom already exist.");
 		}
 		ClassRoomDto classDto = modelMapper.map(classRoom, ClassRoomDto.class);
 		classDto.setStudentDto(this.studentListToStudentDto(students));
@@ -109,6 +113,11 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 			if(this.classRoomRepository.findClassRoomByClassName(classRoomDto.getClassName()).isPresent()) {
 				ClassRoom room = this.classRoomRepository.findClassRoomByClassName(classRoomDto.getClassName()).get();
 				if(room.isEqualId(classRoom.getId())) {
+					int totalAttendedStudent = this.classRoomRepository.getTotalNumberOfStudentByClassId(classRoom.getId());
+					if((totalAttendedStudent+classRoomDto.getStudentDto().size()) > 500) {
+						throw new ApiErrorResponse("1005", "Maximum allowed student for each class is 500.\n"
+								+ "There are total number of students who already attend the class are "+ totalAttendedStudent);
+					}
 					classRoom = this.classRoomRepository.save(classRoom);
 				}else {
 					throw new ApiErrorResponse("1003", "ClassRoom name must be unique.");

@@ -8,27 +8,55 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.astarel.school.exception.ApiErrorResponse;
+import com.astarel.school.model.dto.SubjectDto;
 import com.astarel.school.model.dto.TeacherDto;
+import com.astarel.school.model.entity.Subject;
 import com.astarel.school.model.entity.Teacher;
 import com.astarel.school.repository.TeacherRepository;
 import com.astarel.school.service.TeacherService;
 
 @Service
-public class TeacherServiceImpl implements TeacherService{
-	
+public class TeacherServiceImpl implements TeacherService {
+
 	@Autowired
 	TeacherRepository teacherRepository;
-	
+
 	ModelMapper modelMapper = new ModelMapper();
-	
+
 	private List<TeacherDto> teacherListToTeacherDto(List<Teacher> teachers) {
 		List<TeacherDto> teacherDto = new ArrayList<TeacherDto>();
-		
-		for(Teacher teacher: teachers){
+
+		for (Teacher teacher : teachers) {
 			TeacherDto teachDto = modelMapper.map(teacher, TeacherDto.class);
+			if (teacher.getSubject() != null) {
+				List<SubjectDto> subjects = this.subjectListToSubjectDto(teacher.getSubject());
+				teachDto.setSubjects(subjects);
+			}
 			teacherDto.add(teachDto);
 		}
 		return teacherDto;
+	}
+
+	private List<SubjectDto> subjectListToSubjectDto(List<Subject> subjects) {
+		List<SubjectDto> subjectDto = new ArrayList<SubjectDto>();
+
+		for (Subject subject : subjects) {
+			SubjectDto subjDto = modelMapper.map(subject, SubjectDto.class);
+			subjectDto.add(subjDto);
+		}
+		return subjectDto;
+	}
+
+	private List<Subject> subjectDtoToSubjectList(List<SubjectDto> subjectDtos) {
+		if (subjectDtos != null) {
+			List<Subject> subjects = new ArrayList<Subject>();
+			for (SubjectDto subjectDto : subjectDtos) {
+				Subject subject = modelMapper.map(subjectDto, Subject.class);
+				subjects.add(subject);
+			}
+			return subjects;
+		}
+		return null;
 	}
 
 	@Override
@@ -53,45 +81,60 @@ public class TeacherServiceImpl implements TeacherService{
 	@Override
 	public TeacherDto saveTeacher(TeacherDto teacherDto) throws ApiErrorResponse {
 		// TODO Auto-generated method stub
+		List<Subject> subjects = this.subjectDtoToSubjectList(teacherDto.getSubjects());
+		teacherDto.setSubjects(null);
 		Teacher teacher = modelMapper.map(teacherDto, Teacher.class);
-		if(!this.isExistTeacher(teacher.getEmail())) {
+		if (subjects != null) {
+			for (Subject subject : subjects) {
+				subject.setTeacher(teacher);
+			}
+			teacher.setSubject(subjects);
+		}
+		if (!this.isExistTeacher(teacher.getEmail())) {
 			teacher = this.teacherRepository.save(teacher);
-		}else {
+		} else {
 			throw new ApiErrorResponse("1001", "Teacher already exist");
 		}
-		TeacherDto teachDto = modelMapper.map(teacher, TeacherDto.class) ;
-		
+		TeacherDto teachDto = modelMapper.map(teacher, TeacherDto.class);
+		teachDto.setSubjects(this.subjectListToSubjectDto(subjects));
 		return teachDto;
 	}
 
 	@Override
 	public TeacherDto updateTeacher(TeacherDto teacherDto) throws ApiErrorResponse {
 		// TODO Auto-generated method stub
+		List<Subject> subjects = this.subjectDtoToSubjectList(teacherDto.getSubjects());
+		teacherDto.setSubjects(null);
 		Teacher teacher = modelMapper.map(teacherDto, Teacher.class);
+		if (subjects != null) {
+			for (Subject subject : subjects) {
+				subject.setTeacher(teacher);
+			}
+			teacher.setSubject(subjects);
+		}
 		if (this.findTeacherById(teacher.getId())) {
-			if(this.teacherRepository.findTeacherByEmail(teacher.getEmail()).isPresent()) {
+			if (this.teacherRepository.findTeacherByEmail(teacher.getEmail()).isPresent()) {
 				Teacher existedTeacher = this.teacherRepository.findTeacherByEmail(teacher.getEmail()).get();
-				if(existedTeacher.isEqualId(teacher.getId())) {
+				if (existedTeacher.isEqualId(teacher.getId())) {
 					teacher = this.teacherRepository.save(teacher);
-				}else {
+				} else {
 					throw new ApiErrorResponse("1003", "Teacher email must be unique.");
 				}
 			} else {
 				throw new ApiErrorResponse("1004", "Invalid email.");
 			}
 		} else {
-			throw new ApiErrorResponse("1002", "No such teacher with id - "+teacherDto.getId()+" found");
+			throw new ApiErrorResponse("1002", "No such teacher with id - " + teacherDto.getId() + " found");
 		}
 		TeacherDto teachDto = modelMapper.map(teacher, TeacherDto.class);
+		teachDto.setSubjects(this.subjectListToSubjectDto(subjects));
 		return teachDto;
 	}
 
 	@Override
 	public void deleteTeacherById(Long id) {
 		// TODO Auto-generated method stub
-		
+
 	}
-
-
 
 }

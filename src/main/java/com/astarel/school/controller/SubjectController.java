@@ -74,7 +74,7 @@ public class SubjectController {
 	}
 	
 	@DeleteMapping("/{subjectId}")
-	ResponseEntity<Object> deleteClassRoom(@PathVariable Long subjectId){
+	ResponseEntity<Object> deleteSubject(@PathVariable Long subjectId){
 		log.info("DELETE deleteSubject "+subjectId);
 		
 		if(this.subjectService.findSubjectById(subjectId)) {

@@ -1,6 +1,7 @@
 package com.astarel.school.model.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -28,6 +29,8 @@ public class TeacherDto {
 	@NotBlank(message = "{required.user.address}")
 	@NotNull(message = "{required.user.address}")
 	private String address;
+	
+	private List<SubjectDto> subjects;
 	
 	private Date createdAt;
 

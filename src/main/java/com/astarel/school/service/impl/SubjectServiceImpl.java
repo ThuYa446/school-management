@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.astarel.school.exception.ApiErrorResponse;
-import com.astarel.school.model.dto.ClassRoomDto;
 import com.astarel.school.model.dto.StudentDto;
 import com.astarel.school.model.dto.SubjectDto;
-import com.astarel.school.model.entity.ClassRoom;
 import com.astarel.school.model.entity.Student;
 import com.astarel.school.model.entity.Subject;
 import com.astarel.school.repository.SubjectRepository;
