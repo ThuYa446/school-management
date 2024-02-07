@@ -114,7 +114,7 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 				ClassRoom room = this.classRoomRepository.findClassRoomByClassName(classRoomDto.getClassName()).get();
 				if(room.isEqualId(classRoom.getId())) {
 					int totalAttendedStudent = this.classRoomRepository.getTotalNumberOfStudentByClassId(classRoom.getId());
-					if((totalAttendedStudent+classRoomDto.getStudentDto().size()) > 500) {
+					if((totalAttendedStudent+classRoom.getStudent().size()) > 500) {
 						throw new ApiErrorResponse("1005", "Maximum allowed student for each class is 500.\n"
 								+ "There are total number of students who already attend the class are "+ totalAttendedStudent);
 					}

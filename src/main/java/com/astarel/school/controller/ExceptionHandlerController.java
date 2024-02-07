@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.astarel.school.exception.ApiErrorResponse;
 import com.astarel.school.exception.ErrorHandler;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -30,12 +31,11 @@ public class ExceptionHandlerController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(dto);
     }
     
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<ErrorHandler> handleJwtExpiredException(UsernameNotFoundException ex) {
+    @ExceptionHandler(ApiErrorResponse.class)
+    public ResponseEntity<ApiErrorResponse> handleJwtExpiredException(ApiErrorResponse ex) {
 
-        ErrorHandler dto = new ErrorHandler(HttpStatus.UNAUTHORIZED, "No user found!");
+    	ApiErrorResponse dto = new ApiErrorResponse(ex.getErrorCode(), ex.getMessage());
 
-        dto.setDetailedMessage(null);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(dto);
     }

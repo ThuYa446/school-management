@@ -38,37 +38,49 @@ public class ClassRoomController {
 
 	@PostMapping
 	ResponseEntity<Object> saveClassRoom(@RequestBody @Valid ClassRoomDto classRoom,
-									BindingResult result) throws ApiErrorResponse{
-		log.info("POST saveClassRoom "+classRoom);
-		if(result.hasErrors()){
-			log.info("Validation error in creating ClassRoom "+result);
+									BindingResult result){
+		try {
+			log.info("POST saveClassRoom "+classRoom);
+			if(result.hasErrors()){
+				log.info("Validation error in creating ClassRoom "+result);
+				return ResponseEntity.badRequest()
+								 	.body(result.getAllErrors());	
+			}else {
+				ClassRoomDto savedClassRoom = this.classRoomService.saveClassRoom(classRoom);
+				return ResponseEntity.status(HttpStatus.CREATED)
+									.body(savedClassRoom);
+			}
+		}catch(ApiErrorResponse error) {
 			return ResponseEntity.badRequest()
-							 	.body(result.getAllErrors());	
-		}else {
-			ClassRoomDto savedClassRoom = this.classRoomService.saveClassRoom(classRoom);
-			return ResponseEntity.status(HttpStatus.CREATED)
-								.body(savedClassRoom);
+					.body(new ApiErrorResponse(error.getErrorCode(), error.getMessage()));
 		}
 	}
 	
 	@PutMapping("/{roomId}")
 	ResponseEntity<Object> updateClassRoom(@PathVariable Long roomId, @RequestBody @Valid ClassRoomDto classRoom,
-									BindingResult result) throws ApiErrorResponse{
-		log.info("PUT updateClassRoom "+classRoom);
-		if(result.hasErrors()){
-			log.info("Validation error in updating ClassRoom "+result);
-			return ResponseEntity.badRequest()
-							 	.body(result.getAllErrors());	
-		}else {
-			if(this.classRoomService.findClassRoomById(roomId)) {
-				ClassRoomDto updatedClassRoom = this.classRoomService.updateClassRoom(classRoom);
-				return ResponseEntity.status(HttpStatus.OK)
-									.body(updatedClassRoom);
-			}else {
+									BindingResult result){
+		
+		try {
+			log.info("PUT updateClassRoom "+classRoom);
+			if(result.hasErrors()){
+				log.info("Validation error in updating ClassRoom "+result);
 				return ResponseEntity.badRequest()
-						.body(new ApiErrorResponse("1002", "No such class room with id - "+roomId+" found"));
+								 	.body(result.getAllErrors());	
+			}else {
+				if(this.classRoomService.findClassRoomById(roomId)) {
+					ClassRoomDto updatedClassRoom = this.classRoomService.updateClassRoom(classRoom);
+					return ResponseEntity.status(HttpStatus.OK)
+										.body(updatedClassRoom);
+				}else {
+					return ResponseEntity.badRequest()
+							.body(new ApiErrorResponse("1002", "No such class room with id - "+roomId+" found"));
+				}
 			}
+		}catch(ApiErrorResponse error) {
+			return ResponseEntity.badRequest()
+					.body(new ApiErrorResponse(error.getErrorCode(), error.getMessage()));
 		}
+		
 	}
 	
 	@DeleteMapping("/{roomId}")

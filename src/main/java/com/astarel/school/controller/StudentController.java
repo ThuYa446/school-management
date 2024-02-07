@@ -38,36 +38,46 @@ public class StudentController {
 
 	@PostMapping
 	ResponseEntity<Object> saveStudent(@RequestBody @Valid StudentDto student,
-									BindingResult result) throws ApiErrorResponse{
-		log.info("POST saveStudent "+student);
-		if(result.hasErrors()){
-			log.info("Validation error in creating student "+result);
+									BindingResult result){
+		try {
+			log.info("POST saveStudent "+student);
+			if(result.hasErrors()){
+				log.info("Validation error in creating student "+result);
+				return ResponseEntity.badRequest()
+								 	.body(result.getAllErrors());	
+			}else {
+				StudentDto savedStudent = this.studentService.saveStudent(student);
+				return ResponseEntity.status(HttpStatus.CREATED)
+									.body(savedStudent);
+			}
+		}catch(ApiErrorResponse error) {
 			return ResponseEntity.badRequest()
-							 	.body(result.getAllErrors());	
-		}else {
-			StudentDto savedStudent = this.studentService.saveStudent(student);
-			return ResponseEntity.status(HttpStatus.CREATED)
-								.body(savedStudent);
+					.body(new ApiErrorResponse(error.getErrorCode(), error.getMessage()));
 		}
 	}
 	
 	@PutMapping("/{studentId}")
 	ResponseEntity<Object> updateStudent(@PathVariable Long studentId, @RequestBody @Valid StudentDto student,
-									BindingResult result) throws ApiErrorResponse{
-		log.info("PUT update Student "+student);
-		if(result.hasErrors()){
-			log.info("Validation error in updating Student "+result);
-			return ResponseEntity.badRequest()
-							 	.body(result.getAllErrors());	
-		}else {
-			if(this.studentService.findStudetById(studentId)) {
-				StudentDto updatedStudent = this.studentService.updateStudent(student);
-				return ResponseEntity.status(HttpStatus.OK)
-									.body(updatedStudent);
-			}else {
+									BindingResult result){
+		try {
+			log.info("PUT update Student "+student);
+			if(result.hasErrors()){
+				log.info("Validation error in updating Student "+result);
 				return ResponseEntity.badRequest()
-						.body(new ApiErrorResponse("1002", "No such student with id - "+studentId+" found"));
+								 	.body(result.getAllErrors());	
+			}else {
+				if(this.studentService.findStudetById(studentId)) {
+					StudentDto updatedStudent = this.studentService.updateStudent(student);
+					return ResponseEntity.status(HttpStatus.OK)
+										.body(updatedStudent);
+				}else {
+					return ResponseEntity.badRequest()
+							.body(new ApiErrorResponse("1002", "No such student with id - "+studentId+" found"));
+				}
 			}
+		}catch(ApiErrorResponse error) {
+			return ResponseEntity.badRequest()
+					.body(new ApiErrorResponse(error.getErrorCode(), error.getMessage()));
 		}
 	}
 	

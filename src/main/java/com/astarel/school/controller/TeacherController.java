@@ -38,36 +38,46 @@ public class TeacherController {
 	
 	@PostMapping
 	ResponseEntity<Object> saveTeacher(@RequestBody @Valid TeacherDto teacher,
-									BindingResult result) throws ApiErrorResponse{
-		log.info("POST saveTeacher "+teacher);
-		if(result.hasErrors()){
-			log.info("Validation error in creating teacher "+result);
+									BindingResult result){
+		try {
+			log.info("POST saveTeacher "+teacher);
+			if(result.hasErrors()){
+				log.info("Validation error in creating teacher "+result);
+				return ResponseEntity.badRequest()
+								 	.body(result.getAllErrors());	
+			}else {
+				TeacherDto savedTeacher = this.teacherService.saveTeacher(teacher);
+				return ResponseEntity.status(HttpStatus.CREATED)
+									.body(savedTeacher);
+			}
+		}catch(ApiErrorResponse error) {
 			return ResponseEntity.badRequest()
-							 	.body(result.getAllErrors());	
-		}else {
-			TeacherDto savedTeacher = this.teacherService.saveTeacher(teacher);
-			return ResponseEntity.status(HttpStatus.CREATED)
-								.body(savedTeacher);
+					.body(new ApiErrorResponse(error.getErrorCode(), error.getMessage()));
 		}
 	}
 	
 	@PutMapping("/{teacherId}")
 	ResponseEntity<Object> updateTeacher(@PathVariable Long teacherId, @RequestBody @Valid TeacherDto teacher,
-									BindingResult result) throws ApiErrorResponse{
-		log.info("PUT update teacher "+teacher);
-		if(result.hasErrors()){
-			log.info("Validation error in updating teacher "+result);
-			return ResponseEntity.badRequest()
-							 	.body(result.getAllErrors());	
-		}else {
-			if(this.teacherService.findTeacherById(teacherId)) {
-				TeacherDto updatedTeacher = this.teacherService.updateTeacher(teacher);
-				return ResponseEntity.status(HttpStatus.OK)
-									.body(updatedTeacher);
-			}else {
+									BindingResult result){
+		try {
+			log.info("PUT update teacher "+teacher);
+			if(result.hasErrors()){
+				log.info("Validation error in updating teacher "+result);
 				return ResponseEntity.badRequest()
-						.body(new ApiErrorResponse("1002", "No such teacher with id - "+teacherId+" found"));
+								 	.body(result.getAllErrors());	
+			}else {
+				if(this.teacherService.findTeacherById(teacherId)) {
+					TeacherDto updatedTeacher = this.teacherService.updateTeacher(teacher);
+					return ResponseEntity.status(HttpStatus.OK)
+										.body(updatedTeacher);
+				}else {
+					return ResponseEntity.badRequest()
+							.body(new ApiErrorResponse("1002", "No such teacher with id - "+teacherId+" found"));
+				}
 			}
+		}catch(ApiErrorResponse error) {
+			return ResponseEntity.badRequest()
+					.body(new ApiErrorResponse(error.getErrorCode(), error.getMessage()));
 		}
 	}
 	

@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.astarel.school.model.entity.ClassRoom;
 
@@ -13,6 +14,6 @@ public interface ClassRoomRepository  extends JpaRepository<ClassRoom,Long >{
 	
 	Optional<ClassRoom> findClassRoomById(Long id);
 	
-	@Query("SELECT COUNT(stu) FROM ClassRoom class JOIN Student stu ON class.id=stu.class_room_id WHERE class.id = :id")
-	Integer getTotalNumberOfStudentByClassId(Long id);
+	@Query("SELECT COUNT(stu) FROM ClassRoom class JOIN class.student stu  WHERE class.id = :id")
+	Integer getTotalNumberOfStudentByClassId(@Param("id") Long id);
 }

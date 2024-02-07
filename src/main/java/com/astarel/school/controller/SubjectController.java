@@ -40,36 +40,46 @@ public class SubjectController {
 
 	@PostMapping
 	ResponseEntity<Object> saveSubject(@RequestBody @Valid SubjectDto subject,
-									BindingResult result) throws ApiErrorResponse{
-		log.info("POST saveSubject "+subject);
-		if(result.hasErrors()){
-			log.info("Validation error in creating Subject "+result);
+									BindingResult result){
+		try {
+			log.info("POST saveSubject "+subject);
+			if(result.hasErrors()){
+				log.info("Validation error in creating Subject "+result);
+				return ResponseEntity.badRequest()
+								 	.body(result.getAllErrors());	
+			}else {
+				SubjectDto savedSubject = this.subjectService.saveSubject(subject);
+				return ResponseEntity.status(HttpStatus.CREATED)
+									.body(savedSubject);
+			}
+		}catch(ApiErrorResponse error) {
 			return ResponseEntity.badRequest()
-							 	.body(result.getAllErrors());	
-		}else {
-			SubjectDto savedSubject = this.subjectService.saveSubject(subject);
-			return ResponseEntity.status(HttpStatus.CREATED)
-								.body(savedSubject);
+					.body(new ApiErrorResponse(error.getErrorCode(), error.getMessage()));
 		}
 	}
 	
 	@PutMapping("/{subjectId}")
 	ResponseEntity<Object> updateSubject(@PathVariable Long subjectId, @RequestBody @Valid SubjectDto subject,
-									BindingResult result) throws ApiErrorResponse{
-		log.info("PUT update Subject "+subject);
-		if(result.hasErrors()){
-			log.info("Validation error in updating Subject "+result);
-			return ResponseEntity.badRequest()
-							 	.body(result.getAllErrors());	
-		}else {
-			if(this.subjectService.findSubjectById(subjectId)) {
-				SubjectDto updatedSubject = this.subjectService.updateSubject(subject);
-				return ResponseEntity.status(HttpStatus.OK)
-									.body(updatedSubject);
-			}else {
+									BindingResult result){
+		try {
+			log.info("PUT update Subject "+subject);
+			if(result.hasErrors()){
+				log.info("Validation error in updating Subject "+result);
 				return ResponseEntity.badRequest()
-						.body(new ApiErrorResponse("1002", "No such subject with id - "+subjectId+" found"));
+								 	.body(result.getAllErrors());	
+			}else {
+				if(this.subjectService.findSubjectById(subjectId)) {
+					SubjectDto updatedSubject = this.subjectService.updateSubject(subject);
+					return ResponseEntity.status(HttpStatus.OK)
+										.body(updatedSubject);
+				}else {
+					return ResponseEntity.badRequest()
+							.body(new ApiErrorResponse("1002", "No such subject with id - "+subjectId+" found"));
+				}
 			}
+		}catch(ApiErrorResponse error) {
+			return ResponseEntity.badRequest()
+					.body(new ApiErrorResponse(error.getErrorCode(), error.getMessage()));
 		}
 	}
 	
