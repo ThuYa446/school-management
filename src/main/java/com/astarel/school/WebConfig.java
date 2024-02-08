@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Allow CORS for all endpoints
-                .allowedOrigins("http://localhost:8080") // Allow requests from this origin
+                .allowedOrigins("https://editor-next.swagger.io/") // Allow requests from this origin
                 .allowedMethods("GET", "POST", "PUT", "DELETE") // Allowed HTTP methods
                 .allowedHeaders("*"); // Allowed headers
     }
