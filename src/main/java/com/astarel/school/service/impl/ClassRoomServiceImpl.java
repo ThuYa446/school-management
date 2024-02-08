@@ -38,13 +38,16 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 	}
 	
 	private List<StudentDto> studentListToStudentDto(List<Student> students) {
-		List<StudentDto> studentDto = new ArrayList<StudentDto>();
-		
-		for(Student student: students){
-			StudentDto stuDto = modelMapper.map(student, StudentDto.class);
-			studentDto.add(stuDto);
+		if(students != null) {
+			List<StudentDto> studentDto = new ArrayList<StudentDto>();
+			
+			for(Student student: students){
+				StudentDto stuDto = modelMapper.map(student, StudentDto.class);
+				studentDto.add(stuDto);
+			}
+			return studentDto;
 		}
-		return studentDto;
+		return new ArrayList<StudentDto>();
 	}
 	
 	private List<Student> studentDtoToStudentList(List<StudentDto> studentsDto) {
@@ -56,7 +59,7 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 			}
 			return students;
 		}
-		return null;
+		return new ArrayList<Student>();
 	}
 	
 	@Override

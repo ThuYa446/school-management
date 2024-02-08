@@ -38,13 +38,16 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	private List<SubjectDto> subjectListToSubjectDto(List<Subject> subjects) {
-		List<SubjectDto> subjectDto = new ArrayList<SubjectDto>();
-
-		for (Subject subject : subjects) {
-			SubjectDto subjDto = modelMapper.map(subject, SubjectDto.class);
-			subjectDto.add(subjDto);
+		if(subjects != null) {
+			List<SubjectDto> subjectDto = new ArrayList<SubjectDto>();
+	
+			for (Subject subject : subjects) {
+				SubjectDto subjDto = modelMapper.map(subject, SubjectDto.class);
+				subjectDto.add(subjDto);
+			}
+			return subjectDto;
 		}
-		return subjectDto;
+		return new ArrayList<SubjectDto>();
 	}
 
 	private List<Subject> subjectDtoToSubjectList(List<SubjectDto> subjectDtos) {
@@ -56,7 +59,7 @@ public class TeacherServiceImpl implements TeacherService {
 			}
 			return subjects;
 		}
-		return null;
+		return new ArrayList<Subject>();
 	}
 
 	@Override

@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.astarel.school.exception.ApiErrorResponse;
 import com.astarel.school.model.dto.APIResponseDto;
-import com.astarel.school.model.dto.ClassRoomDto;
-import com.astarel.school.model.dto.StudentDto;
 import com.astarel.school.model.dto.SubjectDto;
 import com.astarel.school.service.SubjectService;
 
