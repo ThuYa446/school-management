@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.astarel.school.exception.ApiErrorResponse;
+import com.astarel.school.model.dto.StudentDto;
 import com.astarel.school.model.dto.SubjectDto;
 import com.astarel.school.model.dto.TeacherDto;
+import com.astarel.school.model.entity.Student;
 import com.astarel.school.model.entity.Subject;
 import com.astarel.school.model.entity.Teacher;
 import com.astarel.school.repository.TeacherRepository;
@@ -36,13 +38,25 @@ public class TeacherServiceImpl implements TeacherService {
 		}
 		return teacherDto;
 	}
+	
+	private List<StudentDto> studentListToStudentDto(List<Student> students) {
+		List<StudentDto> studentDto = new ArrayList<StudentDto>();
+		
+		for(Student student: students){
+			StudentDto stuDto = modelMapper.map(student, StudentDto.class);
+			studentDto.add(stuDto);
+		}
+		return studentDto;
+	}
 
 	private List<SubjectDto> subjectListToSubjectDto(List<Subject> subjects) {
 		if(subjects != null) {
 			List<SubjectDto> subjectDto = new ArrayList<SubjectDto>();
-	
 			for (Subject subject : subjects) {
 				SubjectDto subjDto = modelMapper.map(subject, SubjectDto.class);
+				if(subject.getStudent() != null) {
+					subjDto.setStudentDto(studentListToStudentDto(subject.getStudent()));
+				}
 				subjectDto.add(subjDto);
 			}
 			return subjectDto;

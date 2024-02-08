@@ -24,27 +24,33 @@ public class SubjectServiceImpl implements SubjectService{
 	ModelMapper modelMapper = new ModelMapper();
 
 	private List<SubjectDto> subjectListToSubjectDto(List<Subject> subjects) {
-		List<SubjectDto> subjectDtos = new ArrayList<SubjectDto>();
-		
-		for(Subject subject: subjects){
-			SubjectDto subjectDto = modelMapper.map(subject, SubjectDto.class);
-			if(subject.getStudent() != null) {
-				List<StudentDto> students = this.studentListToStudentDto(subject.getStudent());
-				subjectDto.setStudentDto(students);
+		if(subjects !=null) {
+			List<SubjectDto> subjectDtos = new ArrayList<SubjectDto>();
+			
+			for(Subject subject: subjects){
+				SubjectDto subjectDto = modelMapper.map(subject, SubjectDto.class);
+				if(subject.getStudent() != null) {
+					List<StudentDto> students = this.studentListToStudentDto(subject.getStudent());
+					subjectDto.setStudentDto(students);
+				}
+				subjectDtos.add(subjectDto);
 			}
-			subjectDtos.add(subjectDto);
+			return subjectDtos;
 		}
-		return subjectDtos;
+		return new ArrayList<SubjectDto>();
 	}
 	
 	private List<StudentDto> studentListToStudentDto(List<Student> students) {
-		List<StudentDto> studentDto = new ArrayList<StudentDto>();
-		
-		for(Student student: students){
-			StudentDto stuDto = modelMapper.map(student, StudentDto.class);
-			studentDto.add(stuDto);
+		if(students != null) {
+			List<StudentDto> studentDto = new ArrayList<StudentDto>();
+			
+			for(Student student: students){
+				StudentDto stuDto = modelMapper.map(student, StudentDto.class);
+				studentDto.add(stuDto);
+			}
+			return studentDto;
 		}
-		return studentDto;
+		return new ArrayList<StudentDto>();
 	}
 	
 	private List<Student> studentDtoToStudentList(List<StudentDto> studentsDto) {
@@ -56,7 +62,7 @@ public class SubjectServiceImpl implements SubjectService{
 			}
 			return students;
 		}
-		return null;
+		return new ArrayList<Student>();
 	}
 	
 	@Override

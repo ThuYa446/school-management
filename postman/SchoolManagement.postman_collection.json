@@ -1,0 +1,618 @@
+{
+	"info": {
+		"_postman_id": "d46f9990-afdc-4abb-b6db-9b0e2067801a",
+		"name": "SchoolManagement",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ClassRoom",
+			"item": [
+				{
+					"name": "AllClassRoom",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/class-rooms",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"class-rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveClassRoom",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0NDZ0aHV5YTQ0NkBnbWFpbC5jb20iLCJpYXQiOjE3MDc0MDU2NjYsImV4cCI6MTcwNzQ5MjA2Nn0.c5KY50aQAVjbruBrhUQ_v7s5u2llekBLJjXQDiXkYwM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"className\":\"A-1002\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/class-rooms",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"class-rooms"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Student",
+			"item": [
+				{
+					"name": "SaveStudent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Thuya Oo\",\r\n    \"email\":\"432thuya416@gmail.com\",\r\n    \"phoneNo\":\"+959795552576\",\r\n    \"address\":\"No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp\",\r\n    \"studentType\":\"Internal\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/students",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateStudent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 15,\r\n    \"name\": \"Naylin Nyo Oo\",\r\n    \"email\": \"442thuya416@gmail.com\",\r\n    \"phoneNo\": \"+959795552576\",\r\n    \"address\": \"No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp,Myanmar\",\r\n    \"studentType\": \"Internal\",\r\n    \"createdAt\": \"2024-02-08T15:44:53.431+00:00\",\r\n    \"updatedAt\": \"2024-02-08T15:44:53.431+00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/students/15",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"students",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AllStudent",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/students",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"students"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LogIn",
+			"item": [
+				{
+					"name": "LogIn Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"446thuya446@gmail.com\",\r\n    \"password\":\"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teacher",
+			"item": [
+				{
+					"name": "UpdateTeacher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"id\": 5,\r\n        \"name\": \"David Uba\",\r\n        \"email\": \"446thuya456@gmail.com\",\r\n        \"phoneNo\": \"+959795552596\",\r\n        \"address\": \"No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp,Yangon,Myanmar.\",\r\n        \"createdAt\": \"2024-02-08T15:28:59.000+00:00\",\r\n        \"updatedAt\": \"2024-02-08T15:28:59.000+00:00\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/teachers/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"teachers",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AllTeacher",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/teachers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"teachers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveTeacher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Jolie\",\r\n    \"email\": \"jolie456@gmail.com\",\r\n    \"phoneNo\": \"+959795552586\",\r\n    \"address\": \"No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/teachers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"teachers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subject",
+			"item": [
+				{
+					"name": "AllSubject",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/subjects",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveSubject",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"Java EE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/subjects",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"subjects"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SubjectTeachByTeacher",
+			"item": [
+				{
+					"name": "SubjectsTeachByTeacher",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/teachers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"teachers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SubjectTeachByTeacher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 7,\r\n        \"name\": \"Jolie\",\r\n        \"email\": \"jolie456@gmail.com\",\r\n        \"phoneNo\": \"+959795552586\",\r\n        \"address\": \"No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp\",\r\n        \"subjects\": [{\r\n        \"id\": 5,\r\n        \"title\": \"Java EE\",\r\n        \"createdAt\": \"2024-02-08T16:00:04.000+00:00\"\r\n        }],\r\n        \"createdAt\": \"2024-02-08T15:34:21.000+00:00\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/teachers/7",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"teachers",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SubjectEnrolledByStudent",
+			"item": [
+				{
+					"name": "AllSubjectEnrolledByStudent",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/subjects",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SubjectEnrolledByStudent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"id\": 5,\r\n        \"title\": \"Java EE\",\r\n        \"studentDto\": [ {\r\n        \"id\": 15,\r\n        \"name\": \"Naylin Nyo Oo\",\r\n        \"email\": \"442thuya416@gmail.com\",\r\n        \"phoneNo\": \"+959795552576\",\r\n        \"address\": \"No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp,Myanmar\",\r\n        \"studentType\": \"Internal\",\r\n        \"createdAt\": \"2024-02-08T15:44:53.000+00:00\",\r\n        \"updatedAt\": \"2024-02-08T15:48:31.000+00:00\"\r\n    }, {\r\n        \"id\": 16,\r\n        \"name\": \"Thuya Oo\",\r\n        \"email\": \"432thuya416@gmail.com\",\r\n        \"phoneNo\": \"+959795552576\",\r\n        \"address\": \"No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp\",\r\n        \"studentType\": \"External\",\r\n        \"createdAt\": \"2024-02-08T16:16:55.000+00:00\",\r\n        \"updatedAt\": \"2024-02-08T16:16:55.000+00:00\"\r\n    }\r\n    ],\r\n        \"createdAt\": \"2024-02-08T16:00:04.000+00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/subjects/5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"subjects",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0NDZ0aHV5YTQ0NkBnbWFpbC5jb20iLCJpYXQiOjE3MDc0MDU2NjYsImV4cCI6MTcwNzQ5MjA2Nn0.c5KY50aQAVjbruBrhUQ_v7s5u2llekBLJjXQDiXkYwM"
+		}
+	]
+}
