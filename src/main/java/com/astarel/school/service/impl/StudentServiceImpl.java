@@ -49,6 +49,13 @@ public class StudentServiceImpl implements StudentService{
 		// TODO Auto-generated method stub
 		return this.studentRepository.findStudentById(Id).isPresent();
 	}
+	
+	@Override
+	public StudentDto getStudentById(Long id) {
+		// TODO Auto-generated method stub
+		Student student = this.studentRepository.findStudentById(id).get();
+		return modelMapper.map(student, StudentDto.class);
+	}
 
 	@Override
 	public StudentDto saveStudent(StudentDto studentDto) throws ApiErrorResponse {
@@ -92,5 +99,4 @@ public class StudentServiceImpl implements StudentService{
 		// TODO Auto-generated method stub
 		this.studentRepository.deleteById(id);
 	}
-
 }

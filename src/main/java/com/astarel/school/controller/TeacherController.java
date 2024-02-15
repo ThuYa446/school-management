@@ -36,6 +36,11 @@ public class TeacherController {
 		return this.teacherService.getAllTeachers();
 	}
 	
+	@GetMapping("/{teacherId}")
+	TeacherDto getTeacherById(@PathVariable Long teacherId){
+		return this.teacherService.getTeacherById(teacherId);
+	}
+	
 	@PostMapping
 	ResponseEntity<Object> saveTeacher(@RequestBody @Valid TeacherDto teacher,
 									BindingResult result){

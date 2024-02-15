@@ -94,6 +94,13 @@ public class TeacherServiceImpl implements TeacherService {
 		// TODO Auto-generated method stub
 		return this.teacherRepository.findTeacherById(Id).isPresent();
 	}
+	
+	@Override
+	public TeacherDto getTeacherById(Long id) {
+		// TODO Auto-generated method stub
+		Teacher teacher = this.teacherRepository.findTeacherById(id).get();
+		return modelMapper.map(teacher, TeacherDto.class);
+	}
 
 	@Override
 	public TeacherDto saveTeacher(TeacherDto teacherDto) throws ApiErrorResponse {

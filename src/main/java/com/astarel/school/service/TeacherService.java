@@ -11,7 +11,9 @@ public interface TeacherService {
 	
 	Boolean isExistTeacher(String email);
 	
-	Boolean findTeacherById(Long Id);
+	Boolean findTeacherById(Long id);
+	
+	TeacherDto getTeacherById(Long id);
 	
 	TeacherDto saveTeacher(TeacherDto studentDto) throws ApiErrorResponse;
 	

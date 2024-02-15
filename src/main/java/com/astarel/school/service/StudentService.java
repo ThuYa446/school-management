@@ -13,6 +13,8 @@ public interface StudentService {
 	
 	Boolean findStudetById(Long Id);
 	
+	StudentDto getStudentById(Long id);
+	
 	StudentDto saveStudent(StudentDto studentDto) throws ApiErrorResponse;
 	
 	StudentDto updateStudent(StudentDto studetnDto) throws ApiErrorResponse;

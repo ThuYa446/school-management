@@ -13,6 +13,8 @@ public interface SubjectService {
 	
 	Boolean findSubjectById(Long Id);
 	
+	SubjectDto getSubjectById(Long id);
+	
 	SubjectDto saveSubject(SubjectDto subjectDto) throws ApiErrorResponse;
 	
 	SubjectDto updateSubject(SubjectDto subjectDto) throws ApiErrorResponse;

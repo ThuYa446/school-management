@@ -35,6 +35,11 @@ public class SubjectController {
 	List<SubjectDto> getAllSubjects(){
 		return this.subjectService.getAllSubjects();
 	}
+	
+	@GetMapping("/{subjectId}")
+	SubjectDto getSubjectById(@PathVariable Long subjectId){
+		return this.subjectService.getSubjectById(subjectId);
+	}
 
 	@PostMapping
 	ResponseEntity<Object> saveSubject(@RequestBody @Valid SubjectDto subject,

@@ -47,7 +47,7 @@ public class AuthController {
 		}
 
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-				.body(new ApiErrorResponse("400", "Invalid Authentication."));
+				.body(new ApiErrorResponse("400", "Invalid Credential.\nPlease check username and password."));
 	}
 
 }

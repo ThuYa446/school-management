@@ -71,6 +71,13 @@ public class SubjectServiceImpl implements SubjectService{
 		List<Subject> subjects = this.subjectRepository.findAll();
 		return this.subjectListToSubjectDto(subjects);
 	}
+	
+	@Override
+	public SubjectDto getSubjectById(Long id) {
+		// TODO Auto-generated method stub
+		Subject subject = this.subjectRepository.findSubjectById(id).get();
+		return modelMapper.map(subject, SubjectDto.class);
+	}
 
 	@Override
 	public Boolean isExistSubject(String title) {
@@ -119,15 +126,15 @@ public class SubjectServiceImpl implements SubjectService{
 			subject.setStudent(students);
 		}
 		if (this.findSubjectById(subjectDto.getId())) {
-			if(this.subjectRepository.findSubjectByTitle(subjectDto.getTitle()).isPresent()) {
+			if(this.subjectRepository.findSubjectByTitle(subjectDto.getTitle()).isEmpty()) {
+				subject = this.subjectRepository.save(subject);
+			}else {
 				Subject subjct = this.subjectRepository.findSubjectByTitle(subjectDto.getTitle()).get();
 				if(subjct.isEqualId(subject.getId())) {
 					subject = this.subjectRepository.save(subject);
 				}else {
 					throw new ApiErrorResponse("1003", "Subject title must be unique.");
 				}
-			}else {
-				throw new ApiErrorResponse("1004", "Invalid Subject.");
 			}
 		} else {
 			throw new ApiErrorResponse("1002", "No such subject with id - "+subjectDto.getId()+" found");
@@ -142,7 +149,4 @@ public class SubjectServiceImpl implements SubjectService{
 		// TODO Auto-generated method stub
 		this.subjectRepository.deleteById(id);
 	}
-
-	
-
 }

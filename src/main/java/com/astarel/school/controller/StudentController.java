@@ -35,6 +35,11 @@ public class StudentController {
 	List<StudentDto> getAllStudents(){
 		return this.studentService.getAllStudents();
 	}
+	
+	@GetMapping("/{studentId}")
+	StudentDto getStudentById(@PathVariable Long studentId){
+		return this.studentService.getStudentById(studentId);
+	}
 
 	@PostMapping
 	ResponseEntity<Object> saveStudent(@RequestBody @Valid StudentDto student,
