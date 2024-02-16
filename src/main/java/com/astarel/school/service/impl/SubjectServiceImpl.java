@@ -28,16 +28,20 @@ public class SubjectServiceImpl implements SubjectService{
 			List<SubjectDto> subjectDtos = new ArrayList<SubjectDto>();
 			
 			for(Subject subject: subjects){
-				SubjectDto subjectDto = modelMapper.map(subject, SubjectDto.class);
-				if(subject.getStudent() != null) {
-					List<StudentDto> students = this.studentListToStudentDto(subject.getStudent());
-					subjectDto.setStudentDto(students);
-				}
-				subjectDtos.add(subjectDto);
+				subjectDtos.add(this.subjectToSubjectDto(subject));
 			}
 			return subjectDtos;
 		}
 		return new ArrayList<SubjectDto>();
+	}
+	
+	private SubjectDto subjectToSubjectDto(Subject subject) {
+		SubjectDto subjectDto = modelMapper.map(subject, SubjectDto.class);
+		if(subject.getStudent() != null) {
+			List<StudentDto> students = this.studentListToStudentDto(subject.getStudent());
+			subjectDto.setStudentDto(students);
+		}
+		return subjectDto;
 	}
 	
 	private List<StudentDto> studentListToStudentDto(List<Student> students) {
@@ -76,7 +80,7 @@ public class SubjectServiceImpl implements SubjectService{
 	public SubjectDto getSubjectById(Long id) {
 		// TODO Auto-generated method stub
 		Subject subject = this.subjectRepository.findSubjectById(id).get();
-		return modelMapper.map(subject, SubjectDto.class);
+		return this.subjectToSubjectDto(subject);
 	}
 
 	@Override

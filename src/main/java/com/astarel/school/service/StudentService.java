@@ -20,4 +20,6 @@ public interface StudentService {
 	StudentDto updateStudent(StudentDto studetnDto) throws ApiErrorResponse;
 	
 	void deleteStudentById(Long id);
+	
+	List<StudentDto> getStudentNotEnrolledSubject();
 }

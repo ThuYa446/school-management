@@ -37,6 +37,13 @@ public class StudentServiceImpl implements StudentService{
 		List<Student> students = this.studentRepository.findAll();
 		return this.studentListToStudentDto(students);
 	}
+	
+	@Override
+	public List<StudentDto> getStudentNotEnrolledSubject() {
+		// TODO Auto-generated method stub
+		List<Student> students = this.studentRepository.findBySubjectIsNull();
+		return this.studentListToStudentDto(students);
+	}
 
 	@Override
 	public Boolean isExistStudent(String email) {
@@ -99,4 +106,6 @@ public class StudentServiceImpl implements StudentService{
 		// TODO Auto-generated method stub
 		this.studentRepository.deleteById(id);
 	}
+
+	
 }
