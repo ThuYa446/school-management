@@ -86,6 +86,13 @@ public class SubjectServiceImpl implements SubjectService{
 		Subject subject = this.subjectRepository.findSubjectById(id).get();
 		return this.subjectToSubjectDto(subject);
 	}
+	
+	@Override
+	public List<SubjectDto> getSubjectNotTeachByTeacher() {
+		// TODO Auto-generated method stub
+		List<Subject> subjects = this.subjectRepository.findByTeacherIsNull();
+		return this.subjectListToSubjectDto(subjects);
+	}
 
 	@Override
 	public Boolean isExistSubject(String title) {

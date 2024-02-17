@@ -40,6 +40,11 @@ public class SubjectController {
 	SubjectDto getSubjectById(@PathVariable Long subjectId){
 		return this.subjectService.getSubjectById(subjectId);
 	}
+	
+	@GetMapping("/not-taught")
+	List<SubjectDto> getAllSubjectNotToughByTeacher(){
+		return this.subjectService.getSubjectNotTeachByTeacher();
+	}
 
 	@PostMapping
 	ResponseEntity<Object> saveSubject(@RequestBody @Valid SubjectDto subject,

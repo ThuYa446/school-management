@@ -20,5 +20,7 @@ public interface SubjectService {
 	SubjectDto updateSubject(SubjectDto subjectDto) throws ApiErrorResponse;
 	
 	void deleteSubjectById(Long id);
+	
+	List<SubjectDto> getSubjectNotTeachByTeacher();
 
 }
