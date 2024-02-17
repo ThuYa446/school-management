@@ -27,14 +27,17 @@ public class TeacherServiceImpl implements TeacherService {
 
 	private List<TeacherDto> teacherListToTeacherDto(List<Teacher> teachers) {
 		List<TeacherDto> teacherDto = new ArrayList<TeacherDto>();
-
 		for (Teacher teacher : teachers) {
-			TeacherDto teachDto = modelMapper.map(teacher, TeacherDto.class);
-			if (teacher.getSubject() != null) {
-				List<SubjectDto> subjects = this.subjectListToSubjectDto(teacher.getSubject());
-				teachDto.setSubjects(subjects);
-			}
-			teacherDto.add(teachDto);
+			teacherDto.add(this.teacherToTeacherDto(teacher));
+		}
+		return teacherDto;
+	}
+	
+	private TeacherDto teacherToTeacherDto(Teacher teacher) {
+		TeacherDto teacherDto = modelMapper.map(teacher, TeacherDto.class);
+		if (teacher.getSubject() != null) {
+			List<SubjectDto> subjects = this.subjectListToSubjectDto(teacher.getSubject());
+			teacherDto.setSubjects(subjects);
 		}
 		return teacherDto;
 	}
@@ -99,7 +102,7 @@ public class TeacherServiceImpl implements TeacherService {
 	public TeacherDto getTeacherById(Long id) {
 		// TODO Auto-generated method stub
 		Teacher teacher = this.teacherRepository.findTeacherById(id).get();
-		return modelMapper.map(teacher, TeacherDto.class);
+		return this.teacherToTeacherDto(teacher);
 	}
 
 	@Override
