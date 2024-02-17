@@ -12,6 +12,7 @@ import com.astarel.school.model.dto.StudentDto;
 import com.astarel.school.model.dto.SubjectDto;
 import com.astarel.school.model.entity.Student;
 import com.astarel.school.model.entity.Subject;
+import com.astarel.school.repository.ClassRoomRepository;
 import com.astarel.school.repository.SubjectRepository;
 import com.astarel.school.service.SubjectService;
 
@@ -20,6 +21,9 @@ public class SubjectServiceImpl implements SubjectService{
 	
 	@Autowired
 	SubjectRepository subjectRepository;
+	
+	@Autowired
+	ClassRoomRepository classRoomRepository;
 	
 	ModelMapper modelMapper = new ModelMapper();
 
@@ -104,6 +108,9 @@ public class SubjectServiceImpl implements SubjectService{
 		if(students != null) {
 			for (Student student : students) {
 				student.setSubject(subject);
+				if(this.classRoomRepository.getClassRoomByStudentId(students.get(0).getId()).isPresent()) {
+					student.setClassRoom(this.classRoomRepository.getClassRoomByStudentId(students.get(0).getId()).get());
+				}
 			}
 			subject.setStudent(students);
 		}
@@ -126,6 +133,9 @@ public class SubjectServiceImpl implements SubjectService{
 		if(students != null) {
 			for (Student student : students) {
 				student.setSubject(subject);
+				if(this.classRoomRepository.getClassRoomByStudentId(students.get(0).getId()).isPresent()) {
+					student.setClassRoom(this.classRoomRepository.getClassRoomByStudentId(students.get(0).getId()).get());
+				}
 			}
 			subject.setStudent(students);
 		}

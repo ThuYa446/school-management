@@ -40,9 +40,7 @@ public class Student extends Human implements Serializable{
 	
 	@JsonIgnore
 	@ToString.Exclude
-	@ManyToOne(
-			cascade= CascadeType.ALL
-			)
+	@ManyToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name="subject_id")
 	private Subject subject;
 	

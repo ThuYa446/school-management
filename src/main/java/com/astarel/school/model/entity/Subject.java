@@ -28,9 +28,7 @@ public class Subject  extends BaseEntity implements Serializable{
 	
 	@JsonIgnore
 	@ToString.Exclude
-	@ManyToOne(
-			cascade= CascadeType.ALL
-			)
+	@ManyToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name="teacher_id")
 	private Teacher teacher;
 	

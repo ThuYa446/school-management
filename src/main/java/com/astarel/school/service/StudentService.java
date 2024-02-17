@@ -22,4 +22,6 @@ public interface StudentService {
 	void deleteStudentById(Long id);
 	
 	List<StudentDto> getStudentNotEnrolledSubject();
+	
+	List<StudentDto> getStudentNotJoinedClass();
 }

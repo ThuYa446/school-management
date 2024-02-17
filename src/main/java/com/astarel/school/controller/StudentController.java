@@ -41,6 +41,11 @@ public class StudentController {
 		return this.studentService.getStudentNotEnrolledSubject();
 	}
 	
+	@GetMapping("/not-joined")
+	List<StudentDto> getNotJoinedStudents(){
+		return this.studentService.getStudentNotJoinedClass();
+	}
+	
 	@GetMapping("/{studentId}")
 	StudentDto getStudentById(@PathVariable Long studentId){
 		return this.studentService.getStudentById(studentId);

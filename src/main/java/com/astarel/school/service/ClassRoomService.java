@@ -10,6 +10,8 @@ public interface ClassRoomService {
 	
 	List<ClassRoomDto> getAllClassRoom();
 	
+	ClassRoomDto getClassRoomById(Long id);
+	
 	Boolean isExistClassRoom(String className);
 	
 	Boolean findClassRoomById(Long Id);

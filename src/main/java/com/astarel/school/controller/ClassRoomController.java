@@ -35,6 +35,11 @@ public class ClassRoomController {
 	List<ClassRoomDto> getAllClassRooms(){
 		return this.classRoomService.getAllClassRoom();
 	}
+	
+	@GetMapping("/{classId}")
+	ClassRoomDto getClassRoomById(@PathVariable Long classId){
+		return this.classRoomService.getClassRoomById(classId);
+	}
 
 	@PostMapping
 	ResponseEntity<Object> saveClassRoom(@RequestBody @Valid ClassRoomDto classRoom,

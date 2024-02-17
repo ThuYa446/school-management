@@ -16,4 +16,7 @@ public interface ClassRoomRepository  extends JpaRepository<ClassRoom,Long >{
 	
 	@Query("SELECT COUNT(stu) FROM ClassRoom class JOIN class.student stu  WHERE class.id = :id")
 	Integer getTotalNumberOfStudentByClassId(@Param("id") Long id);
+	
+	@Query("SELECT room FROM ClassRoom room JOIN room.student stu  WHERE stu.id = :id")
+	Optional<ClassRoom> getClassRoomByStudentId(Long id);
 }

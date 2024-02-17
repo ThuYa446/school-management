@@ -13,6 +13,7 @@ import com.astarel.school.model.dto.StudentDto;
 import com.astarel.school.model.entity.ClassRoom;
 import com.astarel.school.model.entity.Student;
 import com.astarel.school.repository.ClassRoomRepository;
+import com.astarel.school.repository.SubjectRepository;
 import com.astarel.school.service.ClassRoomService;
 
 @Service
@@ -20,6 +21,9 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 
 	@Autowired
 	ClassRoomRepository classRoomRepository;
+	
+	@Autowired
+	SubjectRepository subjectRepository;
 
 	ModelMapper modelMapper = new ModelMapper();
 	
@@ -27,14 +31,18 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 		List<ClassRoomDto> classRoomDto = new ArrayList<ClassRoomDto>();
 		
 		for(ClassRoom room: classRoooms){
-			ClassRoomDto roomDto = modelMapper.map(room, ClassRoomDto.class);
-			if(room.getStudent() != null) {
-				List<StudentDto> students = this.studentListToStudentDto(room.getStudent());
-				roomDto.setStudentDto(students);
-			}
-			classRoomDto.add(roomDto);
+			classRoomDto.add(this.classRoomToClassRoomDto(room));
 		}
 		return classRoomDto;
+	}
+	
+	private ClassRoomDto classRoomToClassRoomDto(ClassRoom classRoom) {
+		ClassRoomDto roomDto = modelMapper.map(classRoom, ClassRoomDto.class);
+		if(classRoom.getStudent() != null) {
+			List<StudentDto> students = this.studentListToStudentDto(classRoom.getStudent());
+			roomDto.setStudentDto(students);
+		}
+		return roomDto;
 	}
 	
 	private List<StudentDto> studentListToStudentDto(List<Student> students) {
@@ -73,6 +81,13 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 		// TODO Auto-generated method stub
 		return this.classRoomRepository.findClassRoomById(Id).isPresent();
 	}
+	
+	@Override
+	public ClassRoomDto getClassRoomById(Long id) {
+		// TODO Auto-generated method stub
+		ClassRoom classRoom = this.classRoomRepository.findClassRoomById(id).get();
+		return this.classRoomToClassRoomDto(classRoom);
+	}
 
 	@Override
 	public ClassRoomDto saveClassRoom(ClassRoomDto classRoomDto) throws ApiErrorResponse {
@@ -83,12 +98,14 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 		if(students != null) {
 			for (Student student : students) {
 				student.setClassRoom(classRoom);
+				if(this.subjectRepository.getSubjectByStudentId(students.get(0).getId()).isPresent()) {
+					student.setSubject(this.subjectRepository.getSubjectByStudentId(students.get(0).getId()).get());
+				}
 			}
 			classRoom.setStudent(students);
 		}
 		if (!this.isExistClassRoom(classRoom.getClassName())) {
 			if(classRoom.getStudent().size() > 500) {
-				//if(this.classRoomRepository.getTotalNumberOfStudentByClassId(null))
 				throw new ApiErrorResponse("1005", "Maximum allowed student for each class is 500.");
 			}
 			classRoom = this.classRoomRepository.save(classRoom);
@@ -109,24 +126,27 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 		if(students != null) {
 			for (Student student : students) {
 				student.setClassRoom(classRoom);
+				if(this.subjectRepository.getSubjectByStudentId(students.get(0).getId()).isPresent()) {
+					student.setSubject(this.subjectRepository.getSubjectByStudentId(students.get(0).getId()).get());
+				}
 			}
 			classRoom.setStudent(students);
 		}
 		if (this.findClassRoomById(classRoomDto.getId())) {
-			if(this.classRoomRepository.findClassRoomByClassName(classRoomDto.getClassName()).isPresent()) {
+			int totalAttendedStudent = this.classRoomRepository.getTotalNumberOfStudentByClassId(classRoom.getId());
+			if((totalAttendedStudent+classRoom.getStudent().size()) > 500) {
+				throw new ApiErrorResponse("1005", "Maximum allowed student for each class is 500.\n"
+						+ "There are total number of students who already attend the class are "+ totalAttendedStudent);
+			}
+			if(this.classRoomRepository.findClassRoomByClassName(classRoomDto.getClassName()).isEmpty()) {
+				classRoom = this.classRoomRepository.save(classRoom);
+			}else {
 				ClassRoom room = this.classRoomRepository.findClassRoomByClassName(classRoomDto.getClassName()).get();
 				if(room.isEqualId(classRoom.getId())) {
-					int totalAttendedStudent = this.classRoomRepository.getTotalNumberOfStudentByClassId(classRoom.getId());
-					if((totalAttendedStudent+classRoom.getStudent().size()) > 500) {
-						throw new ApiErrorResponse("1005", "Maximum allowed student for each class is 500.\n"
-								+ "There are total number of students who already attend the class are "+ totalAttendedStudent);
-					}
 					classRoom = this.classRoomRepository.save(classRoom);
 				}else {
 					throw new ApiErrorResponse("1003", "ClassRoom name must be unique.");
 				}
-			}else {
-				throw new ApiErrorResponse("1004", "Invalid ClassRoom.");
 			}
 		} else {
 			throw new ApiErrorResponse("1002", "No such class room with id - "+classRoomDto.getId()+" found");

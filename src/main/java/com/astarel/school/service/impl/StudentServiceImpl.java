@@ -44,6 +44,13 @@ public class StudentServiceImpl implements StudentService{
 		List<Student> students = this.studentRepository.findBySubjectIsNull();
 		return this.studentListToStudentDto(students);
 	}
+	
+	@Override
+	public List<StudentDto> getStudentNotJoinedClass() {
+		// TODO Auto-generated method stub
+		List<Student> students = this.studentRepository.findByClassRoomIsNull();
+		return this.studentListToStudentDto(students);
+	}
 
 	@Override
 	public Boolean isExistStudent(String email) {
