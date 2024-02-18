@@ -14,6 +14,7 @@ import com.astarel.school.model.entity.Student;
 import com.astarel.school.model.entity.Subject;
 import com.astarel.school.repository.ClassRoomRepository;
 import com.astarel.school.repository.SubjectRepository;
+import com.astarel.school.repository.TeacherRepository;
 import com.astarel.school.service.SubjectService;
 
 @Service
@@ -24,6 +25,9 @@ public class SubjectServiceImpl implements SubjectService{
 	
 	@Autowired
 	ClassRoomRepository classRoomRepository;
+	
+	@Autowired
+	TeacherRepository teacherRepository;
 	
 	ModelMapper modelMapper = new ModelMapper();
 
@@ -115,11 +119,14 @@ public class SubjectServiceImpl implements SubjectService{
 		if(students != null) {
 			for (Student student : students) {
 				student.setSubject(subject);
-				if(this.classRoomRepository.getClassRoomByStudentId(students.get(0).getId()).isPresent()) {
-					student.setClassRoom(this.classRoomRepository.getClassRoomByStudentId(students.get(0).getId()).get());
+				if(this.classRoomRepository.getClassRoomByStudentId(student.getId()).isPresent()) {
+					student.setClassRoom(this.classRoomRepository.getClassRoomByStudentId(student.getId()).get());
 				}
 			}
 			subject.setStudent(students);
+			if(this.teacherRepository.getTeacherBySubjectId(subject.getId()).isPresent()) {
+				subject.setTeacher(this.teacherRepository.getTeacherBySubjectId(subject.getId()).get());
+			}
 		}
 		if (!this.isExistSubject(subject.getTitle())) {
 			subject = this.subjectRepository.save(subject);
@@ -145,6 +152,9 @@ public class SubjectServiceImpl implements SubjectService{
 				}
 			}
 			subject.setStudent(students);
+			if(this.teacherRepository.getTeacherBySubjectId(subject.getId()).isPresent()) {
+				subject.setTeacher(this.teacherRepository.getTeacherBySubjectId(subject.getId()).get());
+			}
 		}
 		if (this.findSubjectById(subjectDto.getId())) {
 			if(this.subjectRepository.findSubjectByTitle(subjectDto.getTitle()).isEmpty()) {
