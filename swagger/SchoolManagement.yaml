@@ -7,6 +7,32 @@ servers:
 - url: http://localhost:8080/api
   variables: {}
 paths:
+  /auth/login:
+    post:
+      tags:
+      - LogIn
+      summary: LogIn Request
+      operationId: LogInRequest
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/LogInRequestRequest'
+              - example:
+                  email: 446thuya446@gmail.com
+                  password: '12345'
+            example:
+              email: 446thuya446@gmail.com
+              password: '12345'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
   /class-rooms:
     get:
       tags:
@@ -35,9 +61,54 @@ paths:
               allOf:
               - $ref: '#/components/schemas/SaveClassRoomRequest'
               - example:
-                  className: A-1002
+                  className: A-1001
             example:
-              className: A-1002
+              className: A-1001
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /class-rooms/42:
+    get:
+      tags:
+      - ClassRoom
+      summary: Get ClassRoom By Id
+      operationId: GetClassRoomById
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    put:
+      tags:
+      - ClassRoom
+      summary: Update ClassRoom
+      operationId: UpdateClassRoom
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdateClassRoomRequest'
+              - example:
+                  id: 42
+                  className: A-2001
+                  createdAt: 2024-02-18T05:04:54.000+00:00
+                  updatedAt: 2024-02-18T05:04:54.000+00:00
+            example:
+              id: 42
+              className: A-2001
+              createdAt: 2024-02-18T05:04:54.000+00:00
+              updatedAt: 2024-02-18T05:04:54.000+00:00
         required: true
       responses:
         '200':
@@ -93,7 +164,7 @@ paths:
       deprecated: false
       security:
       - bearer: []
-  /students/15:
+  /students/30:
     put:
       tags:
       - Student
@@ -108,23 +179,27 @@ paths:
               allOf:
               - $ref: '#/components/schemas/UpdateStudentRequest'
               - example:
-                  id: 15
-                  name: Naylin Nyo Oo
-                  email: 442thuya416@gmail.com
-                  phoneNo: '+959795552576'
-                  address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp,Myanmar
+                  id: 30
+                  name: Thuya Oo(Mello)
+                  email: 432thuya416@gmail.com
+                  phoneNo: '+959795552579'
+                  address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp
                   studentType: Internal
-                  createdAt: 2024-02-08T15:44:53.431+00:00
-                  updatedAt: 2024-02-08T15:44:53.431+00:00
+                  classRoomDto: null
+                  subjectDto: null
+                  createdAt: 2024-02-18T05:08:43.000+00:00
+                  updatedAt: 2024-02-18T05:08:43.000+00:00
             example:
-              id: 15
-              name: Naylin Nyo Oo
-              email: 442thuya416@gmail.com
-              phoneNo: '+959795552576'
-              address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp,Myanmar
+              id: 30
+              name: Thuya Oo(Mello)
+              email: 432thuya416@gmail.com
+              phoneNo: '+959795552579'
+              address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp
               studentType: Internal
-              createdAt: 2024-02-08T15:44:53.431+00:00
-              updatedAt: 2024-02-08T15:44:53.431+00:00
+              classRoomDto: null
+              subjectDto: null
+              createdAt: 2024-02-18T05:08:43.000+00:00
+              updatedAt: 2024-02-18T05:08:43.000+00:00
         required: true
       responses:
         '200':
@@ -133,33 +208,20 @@ paths:
       deprecated: false
       security:
       - bearer: []
-  /auth/login:
-    post:
+    get:
       tags:
-      - LogIn
-      summary: LogIn Request
-      operationId: LogInRequest
+      - Student
+      summary: Get Student By Id
+      operationId: GetStudentById
       parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              allOf:
-              - $ref: '#/components/schemas/LogInRequestRequest'
-              - example:
-                  email: 446thuya446@gmail.com
-                  password: '12345'
-            example:
-              email: 446thuya446@gmail.com
-              password: '12345'
-        required: true
       responses:
         '200':
           description: ''
           headers: {}
       deprecated: false
-  /teachers/5:
+      security:
+      - bearer: []
+  /teachers/18:
     put:
       tags:
       - Teacher
@@ -174,22 +236,37 @@ paths:
               allOf:
               - $ref: '#/components/schemas/UpdateTeacherRequest'
               - example:
-                  id: 5
-                  name: David Uba
-                  email: 446thuya456@gmail.com
-                  phoneNo: '+959795552596'
-                  address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp,Yangon,Myanmar.
-                  createdAt: 2024-02-08T15:28:59.000+00:00
-                  updatedAt: 2024-02-08T15:28:59.000+00:00
+                  id: 18
+                  name: Jolie05
+                  email: jolie4876@gmail.com
+                  phoneNo: '+959795552696'
+                  address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp,Yangon
+                  subjects: []
+                  createdAt: 2024-02-18T05:15:00.000+00:00
+                  updatedAt: 2024-02-18T05:15:00.000+00:00
             example:
-              id: 5
-              name: David Uba
-              email: 446thuya456@gmail.com
-              phoneNo: '+959795552596'
-              address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp,Yangon,Myanmar.
-              createdAt: 2024-02-08T15:28:59.000+00:00
-              updatedAt: 2024-02-08T15:28:59.000+00:00
+              id: 18
+              name: Jolie05
+              email: jolie4876@gmail.com
+              phoneNo: '+959795552696'
+              address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp,Yangon
+              subjects: []
+              createdAt: 2024-02-18T05:15:00.000+00:00
+              updatedAt: 2024-02-18T05:15:00.000+00:00
         required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    get:
+      tags:
+      - Teacher
+      summary: Get Teacher By Id
+      operationId: GetTeacherById
+      parameters: []
       responses:
         '200':
           description: ''
@@ -225,14 +302,14 @@ paths:
               allOf:
               - $ref: '#/components/schemas/SaveTeacherRequest'
               - example:
-                  name: Jolie
-                  email: jolie456@gmail.com
-                  phoneNo: '+959795552586'
+                  name: Jolie02
+                  email: jolie4876@gmail.com
+                  phoneNo: '+959795552596'
                   address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp
             example:
-              name: Jolie
-              email: jolie456@gmail.com
-              phoneNo: '+959795552586'
+              name: Jolie02
+              email: jolie4876@gmail.com
+              phoneNo: '+959795552596'
               address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp
         required: true
       responses:
@@ -270,10 +347,38 @@ paths:
               allOf:
               - $ref: '#/components/schemas/SaveSubjectRequest'
               - example:
-                  title: Java EE
+                  title: Data Structure & Algorithm
             example:
-              title: Java EE
+              title: Data Structure & Algorithm
         required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /subjects/18:
+    get:
+      tags:
+      - Subject
+      summary: Get Subject By Id
+      operationId: GetSubjectById
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /subjects/not-taught:
+    get:
+      tags:
+      - SubjectTeachByTeacher
+      summary: SubjectNotTeachByTeacher
+      operationId: SubjectNotTeachByTeacher
+      parameters: []
       responses:
         '200':
           description: ''
@@ -318,6 +423,20 @@ paths:
                 createdAt: 2024-02-08T16:00:04.000+00:00
               createdAt: 2024-02-08T15:34:21.000+00:00
         required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /students/unregister:
+    get:
+      tags:
+      - SubjectEnrolledByStudent
+      summary: GetStudentNotEnrolledBySubject
+      operationId: GetStudentNotEnrolledBySubject
+      parameters: []
       responses:
         '200':
           description: ''
@@ -389,8 +508,36 @@ paths:
       deprecated: false
       security:
       - bearer: []
+  /students/not-joined:
+    get:
+      tags:
+      - StudentAttendedClass
+      summary: GetStudentNotAttendedToClass
+      operationId: GetStudentNotAttendedToClass
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
 components:
   schemas:
+    LogInRequestRequest:
+      title: LogInRequestRequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: 446thuya446@gmail.com
+        password: '12345'
     SaveClassRoomRequest:
       title: SaveClassRoomRequest
       required:
@@ -400,7 +547,30 @@ components:
         className:
           type: string
       example:
-        className: A-1002
+        className: A-1001
+    UpdateClassRoomRequest:
+      title: UpdateClassRoomRequest
+      required:
+      - id
+      - className
+      - createdAt
+      - updatedAt
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        className:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+      example:
+        id: 42
+        className: A-2001
+        createdAt: 2024-02-18T05:04:54.000+00:00
+        updatedAt: 2024-02-18T05:04:54.000+00:00
     SaveStudentRequest:
       title: SaveStudentRequest
       required:
@@ -436,6 +606,8 @@ components:
       - phoneNo
       - address
       - studentType
+      - classRoomDto
+      - subjectDto
       - createdAt
       - updatedAt
       type: object
@@ -453,33 +625,27 @@ components:
           type: string
         studentType:
           type: string
+        classRoomDto:
+          type: string
+          nullable: true
+        subjectDto:
+          type: string
+          nullable: true
         createdAt:
           type: string
         updatedAt:
           type: string
       example:
-        id: 15
-        name: Naylin Nyo Oo
-        email: 442thuya416@gmail.com
-        phoneNo: '+959795552576'
-        address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp,Myanmar
+        id: 30
+        name: Thuya Oo(Mello)
+        email: 432thuya416@gmail.com
+        phoneNo: '+959795552579'
+        address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp
         studentType: Internal
-        createdAt: 2024-02-08T15:44:53.431+00:00
-        updatedAt: 2024-02-08T15:44:53.431+00:00
-    LogInRequestRequest:
-      title: LogInRequestRequest
-      required:
-      - email
-      - password
-      type: object
-      properties:
-        email:
-          type: string
-        password:
-          type: string
-      example:
-        email: 446thuya446@gmail.com
-        password: '12345'
+        classRoomDto: null
+        subjectDto: null
+        createdAt: 2024-02-18T05:08:43.000+00:00
+        updatedAt: 2024-02-18T05:08:43.000+00:00
     UpdateTeacherRequest:
       title: UpdateTeacherRequest
       required:
@@ -488,6 +654,7 @@ components:
       - email
       - phoneNo
       - address
+      - subjects
       - createdAt
       - updatedAt
       type: object
@@ -503,18 +670,24 @@ components:
           type: string
         address:
           type: string
+        subjects:
+          type: array
+          items:
+            type: string
+          description: ''
         createdAt:
           type: string
         updatedAt:
           type: string
       example:
-        id: 5
-        name: David Uba
-        email: 446thuya456@gmail.com
-        phoneNo: '+959795552596'
-        address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp,Yangon,Myanmar.
-        createdAt: 2024-02-08T15:28:59.000+00:00
-        updatedAt: 2024-02-08T15:28:59.000+00:00
+        id: 18
+        name: Jolie05
+        email: jolie4876@gmail.com
+        phoneNo: '+959795552696'
+        address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp,Yangon
+        subjects: []
+        createdAt: 2024-02-18T05:15:00.000+00:00
+        updatedAt: 2024-02-18T05:15:00.000+00:00
     SaveTeacherRequest:
       title: SaveTeacherRequest
       required:
@@ -533,9 +706,9 @@ components:
         address:
           type: string
       example:
-        name: Jolie
-        email: jolie456@gmail.com
-        phoneNo: '+959795552586'
+        name: Jolie02
+        email: jolie4876@gmail.com
+        phoneNo: '+959795552596'
         address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp
     SaveSubjectRequest:
       title: SaveSubjectRequest
@@ -546,7 +719,30 @@ components:
         title:
           type: string
       example:
-        title: Java EE
+        title: Data Structure & Algorithm
+    UpdateSubjectRequest:
+      title: UpdateSubjectRequest
+      required:
+      - id
+      - title
+      - createdAt
+      - updatedAt
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        title:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+      example:
+        id: 18
+        title: Data Structure & Algorithm in Java
+        createdAt: 2024-02-18T05:17:31.000+00:00
+        updatedAt: 2024-02-18T05:17:31.000+00:00
     SubjectTeachByTeacherRequest:
       title: SubjectTeachByTeacherRequest
       required:
@@ -688,16 +884,106 @@ components:
         studentType: Internal
         createdAt: 2024-02-08T15:44:53.000+00:00
         updatedAt: 2024-02-08T15:48:31.000+00:00
+    StudentAttendedClassRequest:
+      title: StudentAttendedClassRequest
+      required:
+      - id
+      - className
+      - studentDto
+      - createdAt
+      - updatedAt
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        className:
+          type: string
+        studentDto:
+          type: array
+          items:
+            $ref: '#/components/schemas/StudentDto1'
+          description: ''
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+      example:
+        id: 42
+        className: A-2001
+        studentDto:
+        - id: 30
+          name: Thuya Oo(Mello)
+          email: 432thuya416@gmail.com
+          phoneNo: '+959795552579'
+          address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp
+          studentType: Internal
+          classRoomDto: null
+          subjectDto: null
+          createdAt: 2024-02-18T05:08:43.000+00:00
+          updatedAt: 2024-02-18T05:13:44.000+00:00
+        createdAt: 2024-02-18T05:04:54.000+00:00
+        updatedAt: 2024-02-18T05:07:57.000+00:00
+    StudentDto1:
+      title: StudentDto1
+      required:
+      - id
+      - name
+      - email
+      - phoneNo
+      - address
+      - studentType
+      - classRoomDto
+      - subjectDto
+      - createdAt
+      - updatedAt
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        email:
+          type: string
+        phoneNo:
+          type: string
+        address:
+          type: string
+        studentType:
+          type: string
+        classRoomDto:
+          type: string
+          nullable: true
+        subjectDto:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+      example:
+        id: 30
+        name: Thuya Oo(Mello)
+        email: 432thuya416@gmail.com
+        phoneNo: '+959795552579'
+        address: No(120)/Room(19),Yangon-Insein Road,Hlaing Tsp
+        studentType: Internal
+        classRoomDto: null
+        subjectDto: null
+        createdAt: 2024-02-18T05:08:43.000+00:00
+        updatedAt: 2024-02-18T05:13:44.000+00:00
   securitySchemes:
     bearer:
       type: http
       scheme: bearer
 security: []
 tags:
+- name: LogIn
 - name: ClassRoom
 - name: Student
-- name: LogIn
 - name: Teacher
 - name: Subject
 - name: SubjectTeachByTeacher
 - name: SubjectEnrolledByStudent
+- name: StudentAttendedClass
