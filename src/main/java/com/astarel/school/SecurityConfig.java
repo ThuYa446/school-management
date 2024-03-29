@@ -1,8 +1,10 @@
 package com.astarel.school;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -10,6 +12,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -34,12 +37,16 @@ public class SecurityConfig {
 	UserDetailsService userDetailsService() {
 		return new UserDetailsServiceImpl();
 	}
-
+	
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http, UserDetailsService userDetailsService) throws Exception {
 		return http.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(
-						auth -> auth.requestMatchers("/api/auth/login").permitAll().anyRequest().authenticated())
+						auth -> auth.requestMatchers("/api/auth/login").permitAll()
+						.requestMatchers(HttpMethod.GET,"/*").permitAll()
+						.anyRequest().authenticated()
+						)
+				
 				.authenticationProvider(authenticationProvider())
 				.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class).build();
 	}
