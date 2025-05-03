@@ -157,7 +157,7 @@ public class SubjectServiceImpl implements SubjectService{
 			}
 		}
 		if (this.findSubjectById(subjectDto.getId())) {
-			if(this.subjectRepository.findSubjectByTitle(subjectDto.getTitle()).isEmpty()) {
+			if(!this.subjectRepository.findSubjectByTitle(subjectDto.getTitle()).isPresent()) {
 				subject = this.subjectRepository.save(subject);
 			}else {
 				Subject subjct = this.subjectRepository.findSubjectByTitle(subjectDto.getTitle()).get();

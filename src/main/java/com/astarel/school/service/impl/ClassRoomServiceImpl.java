@@ -138,7 +138,7 @@ public class ClassRoomServiceImpl implements ClassRoomService {
 				throw new ApiErrorResponse("1005", "Maximum allowed student for each class is 500.\n"
 						+ "There are total number of students who already attend the class are "+ totalAttendedStudent);
 			}
-			if(this.classRoomRepository.findClassRoomByClassName(classRoomDto.getClassName()).isEmpty()) {
+			if(!this.classRoomRepository.findClassRoomByClassName(classRoomDto.getClassName()).isPresent()) {
 				classRoom = this.classRoomRepository.save(classRoom);
 			}else {
 				ClassRoom room = this.classRoomRepository.findClassRoomByClassName(classRoomDto.getClassName()).get();

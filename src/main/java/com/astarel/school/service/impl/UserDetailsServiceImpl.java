@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         Optional<User> user = userRepository.findByEmail(email);
-        if(user.isEmpty()){
+        if(!user.isPresent()){
             log.error("Email not found: " + email);
             throw new UsernameNotFoundException("could not found email..!!");
         }
