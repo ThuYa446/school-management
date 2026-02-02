@@ -1,5 +1,8 @@
 package com.astarel.school.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,10 +37,10 @@ public class AuthController {
 
 	@Autowired
 	JwtUtil jwtUtil;
-	
+
 	@GetMapping("/csrf-token")
 	public CsrfToken csrf(CsrfToken token) {
-	    return token; // This ensures token is created and sent as cookie
+		return token; // This ensures token is created and sent as cookie
 	}
 
 	@PostMapping("/auth/login")
@@ -46,10 +50,13 @@ public class AuthController {
 			Authentication authentication = authManager.authenticate(
 					new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
 			if (authentication.isAuthenticated()) {
-				return ResponseEntity.status(HttpStatus.OK)
-						.body(AuthResponse.builder().accessToken(jwtUtil.GenerateToken(authRequest.getEmail())).build());
+				List<String> roles = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+						.collect(Collectors.toList());
+				log.info("Roles - " + roles);
+				return ResponseEntity.status(HttpStatus.OK).body(AuthResponse.builder()
+						.accessToken(jwtUtil.generateToken(authRequest.getEmail(), roles)).build());
 			}
-		}catch(AuthenticationException exception) {
+		} catch (AuthenticationException exception) {
 			log.info("Authentication Problem Occurs");
 		}
 

@@ -19,7 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import com.astarel.school.auth.JwtAuthenticationFilter;
 import com.astarel.school.service.impl.UserDetailsServiceImpl;
@@ -36,18 +35,16 @@ public class SecurityConfig {
 	UserDetailsService userDetailsService() {
 		return new UserDetailsServiceImpl();
 	}
-	
+
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http, UserDetailsService userDetailsService) throws Exception {
-		return http.csrf(csrf -> csrf
-				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-				.ignoringRequestMatchers("/api/auth/login"))
-				.authorizeHttpRequests(
-						auth -> auth.requestMatchers("/api/auth/login").permitAll()
-						.requestMatchers(HttpMethod.GET,"/*").permitAll()
-						.anyRequest().authenticated()
-						)
-				
+		return http.csrf(csrf -> csrf.disable())
+				// .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+				// .ignoringRequestMatchers("/api/auth/login"))
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/login").permitAll()
+						.requestMatchers(HttpMethod.GET, "/*").permitAll().requestMatchers("/api/class-rooms/**")
+						.hasRole("ADMIN").anyRequest().authenticated())
+
 				.authenticationProvider(authenticationProvider())
 				.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class).build();
 	}

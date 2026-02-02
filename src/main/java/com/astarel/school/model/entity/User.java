@@ -1,36 +1,45 @@
 package com.astarel.school.model.entity;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-@Data
-@ToString(callSuper=true)
 @Entity
-@EqualsAndHashCode(callSuper=true)
+@Getter
+@Setter
+@ToString(exclude = "roles")
+@EqualsAndHashCode(callSuper = true, exclude = "roles")
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends Human implements UserDetails{
+public class User extends Human implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Column
 	private String password;
-	
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Role> roles = new HashSet<>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.roles;
 	}
 
 	@Override

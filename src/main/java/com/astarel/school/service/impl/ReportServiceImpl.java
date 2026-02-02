@@ -1,6 +1,5 @@
 package com.astarel.school.service.impl;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -21,8 +20,8 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Service
-public class ReportServiceImpl implements ReportService{
-	
+public class ReportServiceImpl implements ReportService {
+
 	@Value("${report.directory}")
 	private String reportDirectory;
 
@@ -30,28 +29,25 @@ public class ReportServiceImpl implements ReportService{
 	public String generateReport() {
 		// TODO Auto-generated method stub
 		String fileName = "/School.pdf";
-		Map<String,Object> params = new HashMap<String,Object>();
+		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("header", "This is the Report Header");
 		try {
 			JRDataSource dataSource = new JRBeanCollectionDataSource(new ArrayList<String>());
 			InputStream inputStream = getClass().getResourceAsStream("/reports/sample.jasper");
-		
-            JasperPrint jasperPrint = JasperFillManager.fillReport(
-            		inputStream,
-            		params,
-            		dataSource);
-            ClassPathResource resource = new ClassPathResource(reportDirectory);
-		
-            JasperExportManager.exportReportToPdfFile(jasperPrint,resource.getFile().getAbsolutePath()+fileName);
-            return "reports/"+fileName;
+
+			JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, params, dataSource);
+			ClassPathResource resource = new ClassPathResource(reportDirectory);
+
+			JasperExportManager.exportReportToPdfFile(jasperPrint, resource.getFile().getAbsolutePath() + fileName);
+			return "reports/" + fileName;
 		} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-        } catch (JRException e) {
-            // Handle exception
-            e.printStackTrace();
-            return null;
-        }
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JRException e) {
+			// Handle exception
+			e.printStackTrace();
+			return null;
+		}
 		return "";
 	}
 
