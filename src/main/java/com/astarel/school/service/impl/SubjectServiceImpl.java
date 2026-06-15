@@ -3,6 +3,7 @@ package com.astarel.school.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jfree.util.Log;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ import com.astarel.school.repository.SubjectRepository;
 import com.astarel.school.repository.TeacherRepository;
 import com.astarel.school.service.SubjectService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class SubjectServiceImpl implements SubjectService{
 	
@@ -178,6 +182,7 @@ public class SubjectServiceImpl implements SubjectService{
 	@Override
 	public void deleteSubjectById(Long id) {
 		// TODO Auto-generated method stub
+		log.info("Delete Subect {}.", id);
 		this.subjectRepository.deleteById(id);
 	}
 }

@@ -11,6 +11,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -33,20 +34,18 @@ public class User extends Human implements UserDetails {
 	@Column
 	private String password;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Role> roles = new HashSet<>();
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return this.roles;
-	}
-
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
 		return this.password;
 	}
+	
+	@OneToMany(
+			cascade = CascadeType.ALL,
+			orphanRemoval = true,
+			fetch = FetchType.LAZY)
+	@JoinColumn(name="user_id")
+	private Set<Role> roles = new HashSet<Role>();
 
 	@Override
 	public String getUsername() {
@@ -76,6 +75,12 @@ public class User extends Human implements UserDetails {
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

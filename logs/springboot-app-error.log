@@ -1,0 +1,19 @@
+2026-06-12 12:31:15.784 ERROR [http-nio-8080-exec-1] [] c.a.school.service.impl.UserDetailsServiceImpl - Email not found: 446thuya4@gmail.com
+2026-06-12 17:59:43.038 ERROR [restartedMain] [] o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field customAccessDeniedHandler in com.astarel.school.SecurityConfig required a bean of type 'com.astarel.school.auth.CustomAccessDeniedHandler' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'com.astarel.school.auth.CustomAccessDeniedHandler' in your configuration.
+

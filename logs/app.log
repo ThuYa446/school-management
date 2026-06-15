@@ -1,0 +1,32 @@
+2026-06-09 23:49:51 INFO  [restartedMain] c.astarel.school.SchoolApplication - Starting SchoolApplication using Java 21.0.4 with PID 34524 (D:\Thuya Oo\Training\Astarel\school-management\target\classes started by ThuYa in D:\Thuya Oo\Training\Astarel\school-management)
+2026-06-09 23:49:51 INFO  [restartedMain] c.astarel.school.SchoolApplication - The following 1 profile is active: "local"
+2026-06-09 23:49:51 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-09 23:49:51 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 22 ms. Found 5 JPA repository interfaces.
+2026-06-09 23:49:51 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-06-09 23:49:51 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-06-09 23:49:51 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.18]
+2026-06-09 23:49:51 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-06-09 23:49:51 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 441 ms
+2026-06-09 23:49:51 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-09 23:49:51 DEBUG [restartedMain] o.h.c.i.RegionFactoryInitiator - Cannot default RegionFactory based on registered strategies as `[]` RegionFactory strategies were registered
+2026-06-09 23:49:51 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-06-09 23:49:51 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-09 23:49:51 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Starting...
+2026-06-09 23:49:51 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-7 - Added connection com.mysql.cj.jdbc.ConnectionImpl@36319934
+2026-06-09 23:49:51 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Start completed.
+2026-06-09 23:49:51 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-09 23:49:51 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2026-06-09 23:49:51 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-09 23:49:51 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-09 23:49:51 DEBUG [restartedMain] o.h.s.internal.StatisticsInitiator - Statistics initialized [enabled=false]
+2026-06-09 23:49:52 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-09 23:49:52 INFO  [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2026-06-09 23:49:52 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4cfbd2d6, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@458ad441, org.springframework.security.web.context.SecurityContextHolderFilter@7f5b6f8b, org.springframework.security.web.header.HeaderWriterFilter@4f558348, org.springframework.web.filter.CorsFilter@66dcfb06, org.springframework.security.web.csrf.CsrfFilter@585b1a2c, org.springframework.security.web.authentication.logout.LogoutFilter@509b37fd, com.astarel.school.auth.JwtAuthenticationFilter@ab78ac7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7fd19036, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@17b4b7bf, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@233c0f0a, org.springframework.security.web.access.ExceptionTranslationFilter@54a79556, org.springframework.security.web.access.intercept.AuthorizationFilter@2dcd1d1a]
+2026-06-09 23:49:52 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-06-09 23:49:52 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2026-06-09 23:49:52 INFO  [restartedMain] c.astarel.school.SchoolApplication - Started SchoolApplication in 1.525 seconds (process running for 2197.267)
+2026-06-09 23:49:52 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2026-06-09 23:59:03 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-06-09 23:59:03 INFO  [Thread-27] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-09 23:59:03 INFO  [Thread-27] com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Shutdown initiated...
+2026-06-09 23:59:03 INFO  [Thread-27] com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Shutdown completed.
