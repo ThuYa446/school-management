@@ -94,23 +94,24 @@ public class FileUtils {
 	}
 
 	public static byte[] getFile(final String fileName, final File fileDirectory) {
-		byte[] fileBytes = null;
+	    if (!fileDirectory.exists()) {
+	        return null;
+	    }
 
-		if (fileDirectory.exists()) {
-			final Collection<File> files = listFiles(fileDirectory, null, false);
-			for (final File fileLogo : files) {
-				if (fileLogo.getName().contains(fileName)) {
-					try {
-						fileBytes = IOUtils.toByteArray(new FileInputStream(fileLogo));
-					} catch (IOException e) {
-						log.error("Error converting file- {} to byte array", fileLogo, e);
-					}
-					break;
-				}
-			}
-		}
+	    final Collection<File> files = listFiles(fileDirectory, null, false);
 
-		return fileBytes;
+	    for (final File fileLogo : files) {
+	        if (fileLogo.getName().contains(fileName)) {
+	            try {
+	                return Files.readAllBytes(fileLogo.toPath());
+	            } catch (IOException e) {
+	                log.error("Error converting file- {} to byte array", fileLogo, e);
+	                return null;
+	            }
+	        }
+	    }
+
+	    return null;
 	}
 
 	public static long convertByteToMegaBytes(long bytes) {

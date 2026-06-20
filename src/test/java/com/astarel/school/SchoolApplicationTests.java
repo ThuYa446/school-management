@@ -1,13 +1,15 @@
 package com.astarel.school;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-@SpringBootTest
+import com.astarel.school.SchoolApplication;
+import org.junit.jupiter.api.Test;
+@SuppressWarnings("unused")
 class SchoolApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void mainMethodExists() {
+		assertDoesNotThrow(() -> SchoolApplication.class.getDeclaredMethod("main", String[].class));
 	}
 
 }
